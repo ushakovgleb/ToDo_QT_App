@@ -14,3 +14,18 @@ bool TaskDatabase::open() {
     init();
     return true;
 }
+
+void TaskDatabase::close() {
+    db.close();
+}
+
+void TaskDatabase::init() {
+    QSqlQuery query;
+    query.exec("CREATE TABLE IF NOT EXISTS tasks ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+               "name TEXT,"
+               "tags TEXT,"
+               "deadline TEXT,"
+               "category TEXT,"
+               "completed INTEGER)");
+}

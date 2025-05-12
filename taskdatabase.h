@@ -22,6 +22,9 @@ class TaskDatabase
 {
 public:
     TaskDatabase();
+    bool open();
+    void close;
+    bool addTask(const Task &task);
 };
 
 #endif // TASKDATABASE_H
