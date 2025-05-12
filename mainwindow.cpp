@@ -58,6 +58,36 @@ MainWindow::MainWindow(QWidget *parent)
     loadTaskToUI();
 }
 
+void MainWindow::addTask() {
+    // Получение данных из полей
+    QString name = ui->taskInput->text().trimmed();
+    QString tags = ui->tagInput->text().trimmed();
+    QDate date = ui->deadlineEdit->date();
+    QString category = ui->categorySelect->currentText();
+
+    if (name.isEmpty()) return;
+
+    Task tsk;
+    tsk.name = name;
+    tsk.tags = tags;
+    task.deadline = date;
+    task.category = category;
+    task.done = false;
+
+    int id = taskManager.addTask(task);
+
+    QString display = QString("%1  | 🏷 %2 | ⏳ %3").arg(name, tags, date.toString("yyyy-MM-dd"));
+    QListWidgetItem * item = new QListWidgetItem(display);
+    item->setCheckState(Qt::Unchecked);
+    item->setData(Qt::UserRole, id);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable);
+    categoryLists[category]->addItem(item);
+
+    ui->taskInput->clear();
+    ui-tagInput->clear();
+    ui->deadlineEdit->setDate(QDate::currentDate());
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
