@@ -88,6 +88,15 @@ void MainWindow::addTask() {
     ui->deadlineEdit->setDate(QDate::currentDate());
 }
 
+void MainWindow::removeSelectedTask(QListWidgetItem *item) {
+    if (!item) return;
+
+    int id = item->data(Qt::UserRole).toInt();
+    taskHandler.deleteTask(id);
+    delete item;
+}
+
+
 MainWindow::~MainWindow()
 {
     delete ui;

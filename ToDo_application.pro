@@ -12,11 +12,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    taskdatabase.cpp
+    taskdatabase.cpp \
+    taskhandler.cpp
 
 HEADERS += \
     mainwindow.h \
-    taskdatabase.h
+    taskdatabase.h \
+    taskhandler.h
 
 FORMS += \
     mainwindow.ui
