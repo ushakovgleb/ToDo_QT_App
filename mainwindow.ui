@@ -14,19 +14,164 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #1e1e1e; 
-color: white;</string>
+   <string notr="true">background-color: #1e1e1e; color: white;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>40</y>
-      <width>113</width>
-      <height>38</height>
+      <x>0</x>
+      <y>10</y>
+      <width>991</width>
+      <height>1001</height>
      </rect>
     </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="horizontalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>991</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="inputLayout">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="taskInput">
+           <property name="styleSheet">
+            <string notr="true">background-color: #333; color: white; padding: 5px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Новая задача...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="tagInput">
+           <property name="styleSheet">
+            <string notr="true">background-color: #333; color: white; padding: 5px;</string>
+           </property>
+           <property name="placeholderText">
+            <string>Теги (через запятую)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="deadlineEdit">
+           <property name="styleSheet">
+            <string notr="true">background-color: #333; color: white;</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="categorySelect">
+           <property name="styleSheet">
+            <string notr="true">background-color: #333; color: white;</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Сегодня</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Завтра</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>След. неделя</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Потом</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addButton">
+           <property name="styleSheet">
+            <string notr="true">background-color: #3da4ff; color: white;</string>
+           </property>
+           <property name="text">
+            <string>Добавить</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>991</width>
+          <height>861</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="taskLayout">
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelToday">
+           <property name="text">
+            <string>СЕГОДНЯ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listToday"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelTomorrow">
+           <property name="text">
+            <string>ЗАВТРА</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listTomorrow"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelNextWeek">
+           <property name="text">
+            <string>СЛЕД. НЕДЕЛЯ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listNextWeek"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelLater">
+           <property name="text">
+            <string>ПОТОМ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listLater"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
