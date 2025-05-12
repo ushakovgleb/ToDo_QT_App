@@ -29,3 +29,17 @@ void TaskDatabase::init() {
                "category TEXT,"
                "completed INTEGER)");
 }
+
+bool TaskDatabase::addTask(const Task &task) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO tasks (name, tags, deadline, category, completed)"
+                  "VALUES (:name, :tags, :deadline, :category, :completed)");
+
+
+    query.addBindValue(task.name);
+    query.addBindValue(task.tags);
+    query.addBindValue(task.deadline.toString(Qt::ISODate));
+    query.addBindValue(task.category);
+    query.addBindValue(task.completed ? 1 : 0);
+    return query.exec();
+}
