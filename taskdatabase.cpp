@@ -60,3 +60,15 @@ QList<Task> TaskDatabase::loadTasks() {
 
     return list;
 }
+
+bool TaskDatabase::updateTask(const Task &task) {
+    QSqlQuery query;
+    query.prepare("UPDATE tasks SET name=?, tags=?, deadline=?, category=?, completed=?, WHERE id=?");
+    query.addBindValue(task.name);
+    query.addBindValue(task.tags);
+    query.addBindValue(task.deadline.toString(Qt::ISODate));
+    query.addBindValue(task.category);
+    query.addBindValue(task.completed ? 1 : 0);
+    query.addBindValue(task.id);
+    return quert.exec();
+}

@@ -7,6 +7,7 @@
 #include <QVariant>
 #include <QDate>
 #include <QDebug>
+#include <QList>
 
 
 struct Task {
@@ -25,6 +26,7 @@ public:
     bool open();
     void close;
     bool addTask(const Task &task);
+    Qlist<Task> loadTasks();
 };
 
 #endif // TASKDATABASE_H
