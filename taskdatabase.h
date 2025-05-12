@@ -27,6 +27,8 @@ public:
     void close;
     bool addTask(const Task &task);
     Qlist<Task> loadTasks();
+    bool updateTask(const Task &task);
+    bool deleteTask(int id);
 };
 
 #endif // TASKDATABASE_H

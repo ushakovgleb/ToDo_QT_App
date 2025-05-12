@@ -72,3 +72,11 @@ bool TaskDatabase::updateTask(const Task &task) {
     query.addBindValue(task.id);
     return quert.exec();
 }
+
+
+bool TaskDatabase::deleteTask(int id) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM tasks WHERE i=?");
+    query.addBindValue(id);
+    return query.exec();
+}
