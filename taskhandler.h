@@ -14,6 +14,7 @@ public:
     taskHandler();
 
     void loadTasks();
+    void deleteTask(int id);
 
 private:
     TaskDatabase db;
