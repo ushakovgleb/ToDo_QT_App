@@ -43,3 +43,20 @@ bool TaskDatabase::addTask(const Task &task) {
     query.addBindValue(task.completed ? 1 : 0);
     return query.exec();
 }
+
+QList<Task> TaskDatabase::loadTasks() {
+    QList<Task> list;
+    QSqlQuery query("SELECT id, name, tags, deadline, category, completed FROM tasks");
+    while (query.next()) {
+        Task tsk;
+        tsk.id = query.value(0).toInt();
+        tsk.name = query.value(1).toString();
+        tsk.tags = query.value(2).toString();
+        tsk.deadline = QDate::fromString(query.value(3).toString(), Qt::ISODate);
+        tsk.category = query.value(4).toString();
+        tsk.completed = query.value(5).toInt() == 1;
+        list.append(tsk);
+    }
+
+    return list;
+}
