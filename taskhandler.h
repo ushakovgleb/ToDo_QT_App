@@ -14,7 +14,10 @@ public:
     taskHandler();
 
     void loadTasks();
+    int addTask(const Task &task);
+    void updateTask(const Task &task);
     void deleteTask(int id);
+
 
 private:
     TaskDatabase db;

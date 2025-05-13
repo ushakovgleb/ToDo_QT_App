@@ -21,6 +21,11 @@ int taskHandler::addTask(const Task &task) {
     return id;
 }
 
+void updateTask(const Task &task) {
+    db.updateTask(task);
+    loadTasks;
+}
+
 void taskHandler::deleteTask(int id) {
     db.deleteTask(id);
     loadTasks();
