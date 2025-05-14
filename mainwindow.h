@@ -1,7 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "taskhandler.h"
+
 #include <QMainWindow>
+#include <QListWidget>
+#include <QMap>
 
 
 
@@ -19,7 +23,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void addTask();
+    void removeSelectedTask(QListWidgetItem *item);
+    void showContextMenu(const QPoint &pos);
+    void loadTasksToUI();
+
 private:
     Ui::MainWindow *ui;
+    QMap<QString, QListWidget*> categoryLists;
+    QString getCategoryOfItem(QListWidgetItem * item) const;
+    TaskHandler taskHandler;
+
 };
 #endif // MAINWINDOW_H

@@ -7,7 +7,7 @@ TaskDatabase::TaskDatabase() {
 
 bool TaskDatabase::open() {
     if (!db.open()) {
-        qDebug() << "Не удалось открыть базу данных:" << db.lastError.text();
+        qDebug() << "Не удалось открыть базу данных:" << db.lastError().text();
         return false;
     }
 
@@ -70,7 +70,7 @@ bool TaskDatabase::updateTask(const Task &task) {
     query.addBindValue(task.category);
     query.addBindValue(task.completed ? 1 : 0);
     query.addBindValue(task.id);
-    return quert.exec();
+    return query.exec();
 }
 
 

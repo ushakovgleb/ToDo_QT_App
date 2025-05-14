@@ -3,6 +3,9 @@
 #include "taskdatabase.h"
 
 #include <QVBoxLayout>
+#include <QMessageBox>
+#include <QMenu>
+#include <QDate>
 
 TaskDatabase db;
 
@@ -14,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("ToDo App");
     resize(1000, 1000);
 
-    ui->deadlineEdit->setDate(QDate::currentDate());
+    ui->deadLineEdit->setDate(QDate::currentDate());
 
     categoryLists["Сегодня"] = ui->listToday;
     categoryLists["Завтра"] = ui->listTomorrow;
@@ -28,9 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Контекстное меню
         list->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(list, &ListWidget::customContextMenuRequested, this, &MainWindow::showContextMenu);
+        connect(list, &QListWidget::customContextMenuRequested, this, &MainWindow::showContextMenu);
 
-        connect(list, &ListWidget::itemChanged, this, [this](QListWidgetItem *item) {
+        connect(list, &QListWidget::itemChanged, this, [this](QListWidgetItem *item) {
 
             int id = item->data(Qt::UserRole).toInt();
 
@@ -44,18 +47,18 @@ MainWindow::MainWindow(QWidget *parent)
             tsk.id = id;
             tsk.name = item->text().section("|", 0, 0).trimmed(); // Имя задачи
             tsk.tags = item->text().section("|", 1, 1).replace("🏷", "").trimmed(); // Теги задачи
-            tsk.deadline = item->text().section("|", 2, 2).replace("⏳", "").trimmed(), "yyyy-MM-dd"); // Дата
+            tsk.deadline = QDate::fromString(item->text().section("|", 2, 2).replace("⏳", "").trimmed(), "yyyy-MM-dd"); // Дата
             tsk.category = getCategoryOfItem(item); // Категория
-            tsk.done = item->checkState() == Qt::Checked; // Статус выполнения задачи
+            tsk.completed = item->checkState() == Qt::Checked; // Статус выполнения задачи
 
 
-            taskManager.updateTask(t);
+            taskHandler.updateTask(tsk);
 
         });
 
     }
 
-    loadTaskToUI();
+    loadTasksToUI();
 }
 
 void MainWindow::addTask() {
@@ -70,11 +73,11 @@ void MainWindow::addTask() {
     Task tsk;
     tsk.name = name;
     tsk.tags = tags;
-    task.deadline = date;
-    task.category = category;
-    task.done = false;
+    tsk.deadline = date;
+    tsk.category = category;
+    tsk.completed = false;
 
-    int id = taskManager.addTask(task);
+    int id = taskHandler.addTask(tsk);
 
     QString display = QString("%1  | 🏷 %2 | ⏳ %3").arg(name, tags, date.toString("yyyy-MM-dd"));
     QListWidgetItem * item = new QListWidgetItem(display);
@@ -84,7 +87,7 @@ void MainWindow::addTask() {
     categoryLists[category]->addItem(item);
 
     ui->taskInput->clear();
-    ui-tagInput->clear();
+    ui->tagInput->clear();
     ui->deadlineEdit->setDate(QDate::currentDate());
 }
 
@@ -94,6 +97,47 @@ void MainWindow::removeSelectedTask(QListWidgetItem *item) {
     int id = item->data(Qt::UserRole).toInt();
     taskHandler.deleteTask(id);
     delete item;
+}
+
+void MainWindow::showContextMenu(const QPoint &pos) {
+    QListWidget *senderList = qobject_cast<QListWidget*>(sender());
+    if (!senderList) return;
+    QListWidgetItem * item = senderList->itemAt(pos);
+    if (!item) return;
+
+    QMenu menu;
+    QAction *remove = menu.addAction("Удалить");
+    QAction *selected = menu.exec(senderList->viewport()->mapToGlobal(pos));
+    if (selected == remove) {
+        removeSelectedTask(item);
+    }
+}
+
+QString MainWindow::getCategoryOfItem(QListWidgetItem * item) const {
+    for (auto it = categoryLists.begin(); it != categoryLists.end(); ++it) {
+        if (it.value()->findItems(item->text(), Qt::MatchExactly).contains(item)) {
+            return it.key();
+        }
+    }
+    return "";
+}
+
+void MainWindow::loadTasksToUI() {
+    for (auto lsit : categoryLists.values()) {
+        lsit->clear();
+    }
+
+    for (const QString &category : categoryLists.keys()) {
+        QList<Task> tasks = taskHandler.getTasksByCategory(category);
+        for (const Task &t : tasks) {
+            QString display = QString("%1  | 🏷 %2 | ⏳ %3").arg(t.name, t.tags, t.deadline.toString("yyyy-MM-dd"));
+            QListWidgetItem *item = new QListWidgetItem(display);
+            item->setCheckState(t.completed ? Qt::Checked : Qt::Unchecked);
+            item->setData(Qt::UserRole, t.id);
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable);
+            categoryLists[category]->addItem(item);
+        }
+    }
 }
 
 

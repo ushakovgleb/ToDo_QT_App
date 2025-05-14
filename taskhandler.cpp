@@ -1,19 +1,19 @@
 #include "taskhandler.h"
 
-taskHandler::taskHandler() {
+TaskHandler::TaskHandler() {
     db.open();
     loadTasks();
 }
 
-void taskHandler::loadTasks() {
+void TaskHandler::loadTasks() {
     tasksByCategory.clear();
-    QList<Task> allTasks = db.loadAllTasks();
+    QList<Task> allTasks = db.loadTasks();
     for (const Task &t : allTasks) {
         tasksByCategory[t.category].append(t);
     }
 }
 
-int taskHandler::addTask(const Task &task) {
+int TaskHandler::addTask(const Task &task) {
     int id = db.addTask(task);
     Task newTask = task;
     newTask.id = id;
@@ -21,12 +21,16 @@ int taskHandler::addTask(const Task &task) {
     return id;
 }
 
-void updateTask(const Task &task) {
+void TaskHandler::updateTask(const Task &task) {
     db.updateTask(task);
-    loadTasks;
+    loadTasks();
 }
 
-void taskHandler::deleteTask(int id) {
+void TaskHandler::deleteTask(int id) {
     db.deleteTask(id);
     loadTasks();
+}
+
+QList<Task> TaskHandler::getTasksByCategory(const QString &category) const {
+    return tasksByCategory.value(category);
 }

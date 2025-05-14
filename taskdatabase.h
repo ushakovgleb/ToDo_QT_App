@@ -8,13 +8,14 @@
 #include <QDate>
 #include <QDebug>
 #include <QList>
+#include <QString>
 
 
 struct Task {
     int id;
-    Qstring name;
-    Qstring tags;
-    Qstring category;
+    QString name;
+    QString tags;
+    QString category;
     QDate deadline;
     bool completed;
 };
@@ -24,11 +25,15 @@ class TaskDatabase
 public:
     TaskDatabase();
     bool open();
-    void close;
+    void close();
     bool addTask(const Task &task);
-    Qlist<Task> loadTasks();
+    QList<Task> loadTasks();
     bool updateTask(const Task &task);
     bool deleteTask(int id);
+
+private:
+    QSqlDatabase db;
+    void init();
 };
 
 #endif // TASKDATABASE_H

@@ -3,25 +3,24 @@
 
 
 #include "taskdatabase.h"
-#include <Qlist>
 #include <QMap>
 #include <QString>
 
 
-class taskHandler
+class TaskHandler
 {
 public:
-    taskHandler();
+    TaskHandler();
 
     void loadTasks();
     int addTask(const Task &task);
     void updateTask(const Task &task);
     void deleteTask(int id);
-
+    QList<Task> getTasksByCategory(const QString &category) const;
 
 private:
     TaskDatabase db;
-    QMap<QString, QList<Task> tasksByCategory;
+    QMap<QString, QList<Task>> tasksByCategory;
 };
 
 #endif // TASKHANDLER_H
