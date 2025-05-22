@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
-    background-color: #333333;
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(179, 137, 0, 255), stop:1 rgba(255, 255, 255, 255))
     color: white;
 }
 </string>
@@ -157,7 +157,7 @@ color: rgb(230, 230, 230)
             <string notr="true">color: #40a4ff</string>
            </property>
            <property name="text">
-            <string>СЕГОДНЯ</string>
+            <string>  СЕГОДНЯ</string>
            </property>
           </widget>
          </item>
@@ -188,7 +188,7 @@ color: rgb(230, 230, 230)
             <string notr="true">color: #40a4ff</string>
            </property>
            <property name="text">
-            <string>ЗАВТРА</string>
+            <string>  ЗАВТРА</string>
            </property>
           </widget>
          </item>
@@ -218,7 +218,7 @@ color: rgb(230, 230, 230)
             <string notr="true">color: #40a4ff</string>
            </property>
            <property name="text">
-            <string>СЛЕД. НЕДЕЛЯ</string>
+            <string>  СЛЕД. НЕДЕЛЯ</string>
            </property>
           </widget>
          </item>
@@ -248,7 +248,7 @@ color: rgb(230, 230, 230)
             <string notr="true">color: #40a4ff</string>
            </property>
            <property name="text">
-            <string>ПОТОМ</string>
+            <string>  ПОТОМ</string>
            </property>
           </widget>
          </item>
