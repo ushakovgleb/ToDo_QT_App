@@ -1,8 +1,12 @@
 #include "taskhandler.h"
 
 TaskHandler::TaskHandler() {
-    db.open();
-    loadTasks();
+    if (!db.open()) {
+        qDebug() << "Ошибка при открытии базы данных";
+    } else {
+        loadTasks();
+    }
+
 }
 
 void TaskHandler::loadTasks() {

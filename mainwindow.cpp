@@ -7,7 +7,7 @@
 #include <QMenu>
 #include <QDate>
 
-TaskDatabase db;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("ToDo App");
     resize(1000, 1000);
 
-    ui->deadLineEdit->setDate(QDate::currentDate());
+    ui->deadlineEdit->setDate(QDate::currentDate());
 
     categoryLists["Сегодня"] = ui->listToday;
     categoryLists["Завтра"] = ui->listTomorrow;
