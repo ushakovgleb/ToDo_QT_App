@@ -10,11 +10,24 @@
     <height>1000</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #1e1e1e; color: white;</string>
+   <string notr="true">QMainWindow {
+    background-color: #333333;
+    color: white;
+}
+</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonFollowStyle</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -68,7 +81,7 @@
          <item>
           <widget class="QDateEdit" name="deadlineEdit">
            <property name="styleSheet">
-            <string notr="true">background-color: #333; color: white;</string>
+            <string notr="true">background-color: #333; color: rgb(240, 240, 240)</string>
            </property>
            <property name="calendarPopup">
             <bool>true</bool>
@@ -78,7 +91,8 @@
          <item>
           <widget class="QComboBox" name="categorySelect">
            <property name="styleSheet">
-            <string notr="true">background-color: #333; color: white;</string>
+            <string notr="true">background-color: #333; color:rgb(240, 240, 240)
+</string>
            </property>
            <item>
             <property name="text">
@@ -105,7 +119,10 @@
          <item>
           <widget class="QPushButton" name="addButton">
            <property name="styleSheet">
-            <string notr="true">background-color: #3da4ff; color: white;</string>
+            <string notr="true">background-color: rgb(44, 114, 175);
+color: rgb(230, 230, 230)
+
+</string>
            </property>
            <property name="text">
             <string>Добавить</string>
@@ -129,43 +146,124 @@
          </property>
          <item>
           <widget class="QLabel" name="labelToday">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>14</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #40a4ff</string>
+           </property>
            <property name="text">
             <string>СЕГОДНЯ</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listToday"/>
+          <widget class="QListWidget" name="listToday">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>9</pointsize>
+             <italic>false</italic>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #2b2b2b; color: white;</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelTomorrow">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>14</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #40a4ff</string>
+           </property>
            <property name="text">
             <string>ЗАВТРА</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listTomorrow"/>
+          <widget class="QListWidget" name="listTomorrow">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #2b2b2b; color: white;</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelNextWeek">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>14</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #40a4ff</string>
+           </property>
            <property name="text">
             <string>СЛЕД. НЕДЕЛЯ</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listNextWeek"/>
+          <widget class="QListWidget" name="listNextWeek">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #2b2b2b; color: white;</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelLater">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>14</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: #40a4ff</string>
+           </property>
            <property name="text">
             <string>ПОТОМ</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listLater"/>
+          <widget class="QListWidget" name="listLater">
+           <property name="font">
+            <font>
+             <family>Century Gothic</family>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #2b2b2b; color: white;</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

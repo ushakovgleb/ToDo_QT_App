@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
+
     setWindowTitle("ToDo App");
     resize(1000, 1000);
 
