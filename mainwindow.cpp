@@ -114,6 +114,17 @@ void MainWindow::removeAllTasks(QListWidget *list) {
     }
 }
 
+void MainWindow::removeAllTasks(QListWidget *list) {
+    if (!list) return;
+
+    for (int i = list->count() -1; i >= 0; --i) {
+        QListWidgetItem *item = list->item(i);
+        int id = item->data(Qt::UserRole).toInt();
+        taskHandler.deleteTask(id);
+        delete item;
+    }
+}
+
 void MainWindow::showContextMenu(const QPoint &pos) {
     QListWidget *senderList = qobject_cast<QListWidget*>(sender());
     if (!senderList) return;
