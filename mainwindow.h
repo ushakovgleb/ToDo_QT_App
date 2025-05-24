@@ -28,6 +28,9 @@ private slots:
     void removeSelectedTask(QListWidgetItem *item);
     void showContextMenu(const QPoint &pos);
     void loadTasksToUI();
+    void removeAllTasks(QListWidget *list);
+    void removeSelectedItems(QListWidget *list);
+    void editTask(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
