@@ -27,7 +27,7 @@
 </string>
   </property>
   <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonFollowStyle</enum>
+   <enum>Qt::ToolButtonStyle::ToolButtonFollowStyle</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -157,7 +157,7 @@ color: rgb(230, 230, 230)
             <string notr="true">color: #40a4ff</string>
            </property>
            <property name="text">
-            <string>  СЕГОДНЯ</string>
+            <string>ХУй саммата</string>
            </property>
           </widget>
          </item>

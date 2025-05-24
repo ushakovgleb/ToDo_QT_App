@@ -7,6 +7,12 @@
 #include <QMenu>
 #include <QDate>
 #include <QInputDialog>
+#include <QComboBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QDateEdit>
 
 
 
@@ -114,14 +120,82 @@ void MainWindow::removeAllTasks(QListWidget *list) {
     }
 }
 
-void MainWindow::removeAllTasks(QListWidget *list) {
+void MainWindow::removeSelectedItems(QListWidget *list) {
     if (!list) return;
 
-    for (int i = list->count() -1; i >= 0; --i) {
+    for (int i = list->count() - 1; i >= 0; --i) {
         QListWidgetItem *item = list->item(i);
-        int id = item->data(Qt::UserRole).toInt();
-        taskHandler.deleteTask(id);
-        delete item;
+        if (item->checkState() == Qt::Checked) {
+            int id = item->data(Qt::UserRole).toInt();
+            taskHandler.deleteTask(id);
+            delete item;
+        }
+    }
+}
+
+void MainWindow::editTask(QListWidgetItem *item) {
+    if (!item) return;
+
+    QString oldName = item->text().section("|", 0, 0).trimmed();
+    QString oldTags = item->text().section("|", 1, 1).replace("🏷", "").trimmed();
+    QDate oldDate = QDate::fromString(item->text().section("|", 2, 2).replace("⏳", "").trimmed(), "yyyy-MM-dd");
+    QString oldCategory = getCategoryOfItem(item);
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Редактировать задачу");
+
+    QFormLayout form(&dialog);
+
+    QLineEdit *nameEdit = new QLineEdit(oldName, &dialog);
+    QLineEdit *tagEdit = new QLineEdit(oldTags, &dialog);
+    QDateEdit *dateEdit = new QDateEdit(oldDate, &dialog);
+    dateEdit->setCalendarPopup(true);
+    QComboBox *categoryBox = new QComboBox(&dialog);
+    categoryBox->addItems(categoryLists.keys());
+    categoryBox->setCurrentText(oldCategory);
+
+    form.addRow("Имя задачи:", nameEdit);
+    form.addRow("Теги:", tagEdit);
+    form.addRow("Дедлайн:", dateEdit);
+    form.addRow("Категория:", categoryBox);
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+
+    form.addRow(&buttonBox);
+    connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QString newName = nameEdit->text().trimmed();
+        QString newTags = tagEdit->text().trimmed();
+        QDate newDate = dateEdit->date();
+        QString newCategory = categoryBox->currentText();
+
+        if (!newName.isEmpty()) {
+            QString updatedText = QString("%1 | 🏷 %2 | ⏳ %3").arg(newName, newTags, newDate.toString("yyyy-MM-dd"));
+            item->setText(updatedText);
+
+            int id = item->data(Qt::UserRole).toInt();
+            item->setData(Qt::UserRole, id);
+            item->setCheckState(item->checkState());
+
+            if (newCategory != oldCategory) {
+                QListWidget *oldList = categoryLists[oldCategory];
+                QListWidget *newList = categoryLists[newCategory];
+                oldList->takeItem(oldList->row(item));
+                newList->addItem(item);
+            }
+
+            Task updatedTask;
+            updatedTask.id = id;
+            updatedTask.name = newName;
+            updatedTask.tags = newTags;
+            updatedTask.deadline = newDate;
+            updatedTask.category = newCategory;
+            updatedTask.completed = item->checkState() == Qt::Checked;
+
+            taskHandler.updateTask(updatedTask);
+        }
     }
 }
 
@@ -132,10 +206,21 @@ void MainWindow::showContextMenu(const QPoint &pos) {
     if (!item) return;
 
     QMenu menu;
-    QAction *remove = menu.addAction("Удалить");
+    QAction *editAction = menu.addAction("Редактировать");
+    QAction *removeAction = menu.addAction("Удалить");
+    QAction *removeAllAction = menu.addAction("Очистить список");
+    QAction *removeSelectedAction = menu.addAction("Удалить выполненные задачи");
+
     QAction *selected = menu.exec(senderList->viewport()->mapToGlobal(pos));
-    if (selected == remove) {
+
+    if (selected == editAction) {
+        editTask(item);
+    } else if (selected == removeAction) {
         removeSelectedTask(item);
+    } else if (selected == removeAllAction) {
+        removeAllTasks(senderList);
+    } else if (selected == removeSelectedAction) {
+        removeSelectedItems(senderList);
     }
 }
 
